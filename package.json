@@ -1,0 +1,22 @@
+{
+  "name": "HeartMonitor",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+	"express": "~4.9.0",
+	"body-parser": "~1.8.1",
+    "ejs": "*",
+    "email-templates": "0.0.5",
+    "nodemailer": "2.2.1",
+    "randomstring":"latest",
+    "serve-favicon":"2.3.0",
+    "node-rest-client":"1.8.0",
+    "crypto":"*",
+    "mysql":"*",
+    "express-session": "^1.7.6",
+    "twilio":"*"
+  }
+}

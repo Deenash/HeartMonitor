@@ -1,0 +1,226 @@
+<html>
+
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+<body>
+	
+	
+	
+	
+	
+
+<div class="overlay"></div>
+	<div id="content">
+	
+		<div id="header">
+			<header class="header-user-dropdown">
+
+				<div class="header-limiter">
+					<h1>
+						<a href="#"><img src="/images/logo.png" width="75%" height="75%"></a>
+					</h1>
+					<nav>
+						<a href="/dataPage">Overview</a> 
+						<!-- a href="#">Reports<span class="header-new-feature">new</span></a -->
+					</nav>
+
+					<div class="header-user-menu">
+						<span style="horizontal-align:center"><%=fname%><br><%=lname%></span><img src="/images/default-profile-male.png" alt="User Image" />
+						<ul>
+							<li><a href="#" onclick="javascript:changePassword()">Change Password</a></li>
+							<li><a href="/logout" class="highlight">Logout</a></li>
+						</ul>
+					</div>
+				</div>
+			</header>
+		</div>
+		
+		<div id="mainContent">
+		
+			<div style="text-align: center">
+				<h3>Patient's HR Monitor System</h3>
+			</div>
+
+			<div class="container" style="width: 90%">
+				<div align="center"><h1>RECORDED HEART RATE FOR THE USER: <%= fName %></h1></div>
+				<div id="activity0" style="min-width: 100%; height: 400px; margin: 0 auto"></div>
+				<br>
+				<hr size="5" noshade>
+				<br>
+				<div id="activity1" style="min-width: 100%; height: 400px; margin: 0 auto"></div>
+				<input type="hidden" id="dataUpper0" value="<%= dataUpper0 %>" />
+				<input type="hidden" id="dataUpper1" value="<%= dataUpper1 %>" />
+				<input type="hidden" id="heartRateLowerLimit0" value="<%= heartRateLowerLimit0 %>" />
+				<input type="hidden" id="heartRateUpperLimit0" value="<%= heartRateUpperLimit0 %>" />
+				<input type="hidden" id="heartRateLowerLimit1" value="<%= heartRateLowerLimit1 %>" />
+				<input type="hidden" id="heartRateUpperLimit1" value="<%= heartRateUpperLimit1 %>" />
+				<input type="hidden" id="yData0" value="<%= yData0 %>" />
+				<input type="hidden" id="yData1" value="<%= yData1 %>" />
+				<input type="hidden" id="xLabels0" value="<%= xLabels0 %>" />
+				<input type="hidden" id="xLabels1" value="<%= xLabels1 %>" />
+
+			</div>
+			
+			<div class="push"><!-- empty space at bottom to avoid footer overlap--></div>
+		</div>
+		
+		<div id="footer" class="footer footer-basic-centered">
+			<p class="footer-copyrights">© Copyright 2016, CNMM Corporation.
+				All rights reserved</p>
+		</div>
+	</div>
+
+<script type="text/javascript">
+
+var yData0 = document.getElementById("yData0").value;
+
+var yData1 = document.getElementById("yData1").value;
+
+var xLabels0 = document.getElementById("xLabels0").value;
+
+var xLabels1 = document.getElementById("xLabels1").value;
+
+var dataLower0 = 0, dataUpper0 = document.getElementById("dataUpper0").value;
+var dataLower1 = 0, dataUpper1 = document.getElementById("dataUpper1").value;
+var heartRateLowerLimit0 = document.getElementById("heartRateLowerLimit0").value;
+var heartRateUpperLimit0 = document.getElementById("heartRateUpperLimit0").value;
+var heartRateLowerLimit1 = document.getElementById("heartRateLowerLimit1").value;
+var heartRateUpperLimit1 = document.getElementById("heartRateUpperLimit1").value;
+var user_Id = 1;
+
+
+$(function () {
+    $('#activity0').highcharts({
+        xAxis: {
+            categories: xLabels0
+            // min: 1,
+            // max: 1000,
+            /*labels: {
+
+                return xLabels;
+                formatter: function() {
+                    var date = Highcharts.dateFormat('%Y-%m', this.value);
+                    date = date.split('-');
+                    return date[0] + " Q" + parseInt(date[1]) / 3 + 1;
+                }
+            }*/
+        },
+        yAxis: {
+            min: 10,
+            max: 190
+        },
+        title: {
+            text: 'Heart Rate with regression line for User: '+user_Id+' during lesser activity'
+        },
+        series: [{
+            type: 'line',
+            name: 'Regression Line Lower Limit',
+            data: [[dataLower0, heartRateLowerLimit0], [dataUpper0, heartRateLowerLimit0]],
+            marker: {
+                enabled: false
+            },
+            states: {
+                hover: {
+                    lineWidth: 0
+                }
+            },
+            enableMouseTracking: false
+        },
+        {
+            type: 'line',
+            name: 'Regression Line Upper Limit',
+            data: [[dataLower0, heartRateUpperLimit0], [dataUpper0, heartRateUpperLimit0]],
+            marker: {
+                enabled: false
+            },
+            states: {
+                hover: {
+                    lineWidth: 0
+                }
+            },
+            enableMouseTracking: false
+        }, {
+            type: 'scatter',
+            name: 'Heart Rate Sample',
+            // data: yData,
+            data: yData0,
+            color: '#FF0000',
+            dashStyle: "Dot",
+            marker: {
+                radius: 2
+            }
+        }]
+    });
+});
+
+
+$(function () {
+    $('#activity1').highcharts({
+        xAxis: {
+            categories: xLabels1
+            // min: 1,
+            // max: 1000,
+            /*labels: {
+
+                return xLabels;
+                formatter: function() {
+                    var date = Highcharts.dateFormat('%Y-%m', this.value);
+                    date = date.split('-');
+                    return date[0] + " Q" + parseInt(date[1]) / 3 + 1;
+                }
+            }*/
+        },
+        yAxis: {
+            min: 10,
+            max: 190
+        },
+        title: {
+            text: 'Heart Rate with regression line for User: '+user_Id+' during workouts'
+        },
+        series: [{
+            type: 'line',
+            name: 'Regression Line Lower Limit',
+            data: [[dataLower1, heartRateLowerLimit1], [dataUpper1, heartRateLowerLimit1]],
+            marker: {
+                enabled: false
+            },
+            states: {
+                hover: {
+                    lineWidth: 0
+                }
+            },
+            enableMouseTracking: false
+        },
+        {
+            type: 'line',
+            name: 'Regression Line Upper Limit',
+            data: [[dataLower1, heartRateUpperLimit1], [dataUpper1, heartRateUpperLimit1]],
+            marker: {
+                enabled: false
+            },
+            states: {
+                hover: {
+                    lineWidth: 0
+                }
+            },
+            enableMouseTracking: false
+        }, {
+            type: 'scatter',
+            name: 'Heart Rate Sample',
+            // data: yData,
+            data: yData1,
+            color: '#FF0000',
+            dashStyle: "Dot",
+            marker: {
+                radius: 2
+            }
+        }]
+    });
+});
+</script>
+</body>
+</html>

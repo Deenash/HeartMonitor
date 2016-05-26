@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+
+<link rel="icon" href="/images/favicon.png">
+
+<title>Sign-Up/Login Form</title>
+<link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="/stylesheets/normalize.css">
+<link rel="stylesheet" href="/stylesheets/login.css">
+
+<script src="/js/jquery-1.12.0.min.js"></script>
+
+<script src="/js/login.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+</head>
+	
+<body>
+	<div class="form">
+		<ul class="tab-group">
+			<li class="tab active" id="signuptab"><a href="#signup">Sign Up</a></li>
+			<li class="tab" id="logintab"><a href="#login">Log In</a></li>
+		</ul>
+		<div class="tab-content">
+			<div id="signup">
+				<h1>Create new account?</h1>
+				<% if (locals.pagemessage!=null) { %><h5 style="color:red; text-align:center"><%=pagemessage %></h5><% } %>
+				<form action="/register" method="post" onSubmit="return register();" id="registerForm">
+					<div class="top-row">
+						<div class="field-wrap">
+							<label> First Name<span class="req">*</span></label> 
+							<input type="text" name="firstname" id="firstName" required autocomplete="off" maxlength="100" />
+						</div>
+						<div class="field-wrap">
+							<label> Last Name<span class="req">*</span></label> 
+							<input type="text" name="lastName" id="lastName" required autocomplete="off" maxlength="100" />
+						</div>
+					</div>
+					
+					<div class="field-wrap">
+						<label> Contact Number<span class="req">*</span><span id='ContactError' style='color:red'></span></label> 
+						<input type="text" name="phone" required autocomplete="off" id="phone"/>
+					</div>
+					<div class="field-wrap">
+						<label> Email Address<span class="req">*</span></label> 
+						<input type="email" name="email" required autocomplete="off" maxlength="200" id="email"/>
+					</div>
+					<div class="field-wrap">
+						<label> Set a Password<span class="req">*</span><span id='passwordError' style='color:red'></span></label> 
+						<input type="password" name="password" required autocomplete="off" id="password" onfocus="togglePasswordRulePopUp()" onblur="togglePasswordRulePopUp()"/>
+						
+						<div id="passwordRuleDiv" style="display: none">
+							<span id="pwdChkLength" class="cross"></span>Must be between 7 - 20 characters in length
+							<br><span id="pwdChkAlpha" class="cross"></span>Minimum 4 alpha characters with 1 uppercase
+							<br><span id="pwdChkNum" class="cross"></span>Minimum 1 numeric character(0,9) 
+							<br><span id="pwdChkSpl" class="cross"></span>Minimum 1 specialcharacter(!,#,$,%). 
+							<br><span id="pwdChkSpc" class="cross"></span>The password is case
+							sensitive and must not contain spaces or be the same as
+							your email id
+							</div>
+					</div>
+					<div class="field-wrap">
+						<label> Confirm Password<span class="req">*</span><span id='confirmPasswordError' style='color:red'></span></label> 
+						<input type="password" name="confirmPassword" required autocomplete="off" id="confirmPassword"/>
+					</div>
+					
+					
+					<button class="button button-block" type="submit" id="registerButton">Get Started</button>
+					
+					
+				</form>
+			</div>
+
+			<div id="login">
+				<div id="loginContent" class="slide">
+					<h1>Welcome Back!</h1>
+					<% if (locals.LoginMessage!=null) { %><h5 id="LoginMessageBox" style="color:red; text-align:center"><%=LoginMessage %></h5><% } %>
+					<form action="/login" method="post" id="loginForm">
+						<div class="field-wrap">
+							<label> Email Address<span class="req">*</span></label> 
+							<input name="loginEmail" type="email" required autocomplete="off" id="loginEmail" />
+						</div>
+						<div class="field-wrap">
+							<label> Password<span class="req">*</span></label> 
+							<input name="loginPassword" type="password" required autocomplete="off" id="loginPassword" />
+						</div>
+						<p class="forgot">
+							<a href="#" onclick="javascript:forgotPassword()">Forgot Password?</a>
+						</p>
+						<button class="button button-block" id="loginButton"  onclick="javascript:login()" type="submit">Log In</button>
+					</form>
+				</div>
+				<div id="forgotPasswordContent" class="slide">
+					<h1>Lost Password?!!</h1>
+					<div id="resetPasswordDiv" class="form"></div>
+					<h3>Please enter your registered email address. A temporary password will be sent to you. Once you login, you can reset to new password.</h3>
+						<div class="field-wrap">
+							<label> Email Address<span class="req">*</span><span id='resetEmailError' style='color:red'></span></label> 
+							<input type="email" required autocomplete="off" id="resetEmail" />
+						</div>
+						<p class="forgot">
+							<a href="#" onclick="javascript:backToLogin()">Back to Login?</a>
+						</p>
+						<button class="button button-block" onclick="javascript:resetPassword()" id="resetPasswordButton">Reset Password</button>
+				</div>
+			</div>
+			
+		</div>
+		<!-- tab-content -->
+	</div>
+	<!-- /form -->
+	
+
+
+</head>
+</body>
+</html>

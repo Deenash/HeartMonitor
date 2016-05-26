@@ -1,0 +1,81 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+	<!-- <div align="center"><h1>RECORDED HEART RATE FOR THE USER: 001</h1></div> -->
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script type="text/javascript">
+
+var temp = 1;
+
+
+$(function () {
+    $('#container').highcharts({
+   		 chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+            },
+        title: {
+                text: 'Live heart data for the User: Prabhu'
+            },
+       xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 100
+            },
+         yAxis: {
+                title: {
+                    text: 'Value'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+        series: [{
+            data: [70,72,73,71,68,67,72,76,72]
+        }]
+    });
+
+
+    // the button action
+    var i = 0;
+    setInterval(function(){
+        var chart = $('#container').highcharts();
+        
+        $.ajax({ 
+            type: 'GET', 
+            url: 'http://ec2-54-153-12-179.us-west-1.compute.amazonaws.com:3001/heartrate/getCurrentHeartRate',                        
+            success: function(data) { 
+                data = JSON.parse(data); 
+                chart.series[0].addPoint(Number(data.hr), true, true);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                console.log("Ajax Error: "+textStatus);
+            } 
+    	});
+       
+     }, 2000);
+});
+
+</script>
+</body>
+</html>

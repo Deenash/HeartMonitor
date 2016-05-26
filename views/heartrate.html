@@ -1,0 +1,50 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+	<div align="center"><h1>RECORDED HEART RATE FOR THE USER: 001</h1></div>
+<div id="container" style="min-width: 100%; height: 400px; margin: 0 auto"></div>
+
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        xAxis: {
+            min: 1,
+            max: 25
+        },
+        yAxis: {
+            min: 30,
+            max: 190
+        },
+        title: {
+            text: 'Heart Rate with regression line for User: 1'
+        },
+        series: [{
+            type: 'line',
+            name: 'Regression Line',
+            data: [[1, 148], [25, 170]],
+            marker: {
+                enabled: false
+            },
+            states: {
+                hover: {
+                    lineWidth: 0
+                }
+            },
+            enableMouseTracking: false
+        }, {
+            type: 'scatter',
+            name: 'Heart Rate Sample',
+            data: [98, 123, 125, 136, 95, 100, 120, 132, 115, 136, 135, 143, 144, 149, 168, 155, 154, 156, 160, 143, 146, 155, 151, 152, 148],
+            marker: {
+                radius: 4
+            }
+        }]
+    });
+});
+</script>
+</body>
+</html>
